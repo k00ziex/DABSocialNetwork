@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
 
 namespace DABSocialNetwork.Models
 {
     public class Wall
     {
-        public Post[] Posts { get; set; }
+        public ObjectId id { get; set; }
+        public Post[] UserPosts;
     }
 }
