@@ -6,6 +6,7 @@ namespace DABSocialNetwork.Models
     {
         public ObjectId Id { get; set; }
         public User[] Users;
+        public string NameOfCircle { get; set; }
         public User MyUser { get; set; }
     }
 }
