@@ -12,5 +12,7 @@ namespace DABSocialNetwork.Models
         public DateTime TimeOfPosting { get; set; }
 
         public Comment[] Comments { get; set; }
+
+        public User User { get; set; }
     }
 }
