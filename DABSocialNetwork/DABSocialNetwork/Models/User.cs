@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace DABSocialNetwork.Models
 {
@@ -15,6 +16,10 @@ namespace DABSocialNetwork.Models
 
         public string Email { get; set; }
 
-        
+        public Circle[] MyCircles { get; set; }
+
+        public Wall MyWall{ get; set; }
+
+        public Feed MyFeed { get; set; }
     }
 }
