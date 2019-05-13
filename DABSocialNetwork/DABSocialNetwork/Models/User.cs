@@ -1,8 +1,10 @@
-﻿namespace DABSocialNetwork.Models
+﻿using MongoDB.Bson;
+
+namespace DABSocialNetwork.Models
 {
     public class User
     {
-        public string ID { get; set; }
+        public ObjectId Id { get; set; }
 
         public string Name { get; set; }
 
