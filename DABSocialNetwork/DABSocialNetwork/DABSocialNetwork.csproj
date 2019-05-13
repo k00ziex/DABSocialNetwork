@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BlockedUsers.cs" />
     <Compile Include="Models\Circle.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Feed.cs" />

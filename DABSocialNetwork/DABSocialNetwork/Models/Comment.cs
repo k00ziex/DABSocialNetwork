@@ -11,5 +11,7 @@ namespace DABSocialNetwork.Models
 
         public string CommentContent { get; set; }
 
+        public User User { get; set; }
+
     }
 }
