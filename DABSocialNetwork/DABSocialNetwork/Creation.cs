@@ -28,9 +28,8 @@ namespace DABSocialNetwork
         {
             try
             {
-                var post = new Post(){Comments = new List<Comment>(), Circle = circle, Image = image, Text = text, UserId = owner_id};
-
-                post.TimeOfPosting = DateTime.Now;
+                var post = new Post(){Comments = new List<Comment>(), Circle = circle, Image = image, Text = text, UserId = owner_id, TimeOfPosting = DateTime.Now};
+                
                 postCollection.InsertOne(post);
             }
             catch (Exception e)
@@ -39,11 +38,12 @@ namespace DABSocialNetwork
             }
         }
 
-        public void CreateComment(ObjectId post_id, Comment comment)
+        public void CreateComment(ObjectId post_id, string content)
         {
             try
             {
-                comment.Post.Id = post_id;
+                var comment = new Comment(){CommentContent = content, PostId = post_id, TimeOfCommenting = DateTime.Now};
+
                 commentCollection.InsertOne(comment);
             }
             catch (Exception e)
