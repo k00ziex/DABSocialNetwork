@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using DABSocialNetwork.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DABSocialNetwork
@@ -20,7 +21,7 @@ namespace DABSocialNetwork
             var PostColl = db.GetCollection<Post>("Post");
             var CommentColl = db.GetCollection<Comment>("Comment");
 
-            var user = new User(){Age = 99, Email = "FakeMail2", Gender = "Attack Helicopter", Name = "Zacher"};
+            var user = new User() { Age = 99, Email = "FakeMail2", Gender = "Attack Helicopter", Name = "Zacher"};
             UserColl.InsertOne(user);
             Console.WriteLine("Done");
 
@@ -29,6 +30,23 @@ namespace DABSocialNetwork
             {
                 Console.WriteLine("{0}",USER.Gender);
             }
+
+            try
+            {
+                UserColl.FindOneAndUpdate(
+                    a => a.Name == "Zacher" && a.Email == "FakeMail2", 
+                    Builders<User>.Update.Set(e=> e.MyFeed, new Feed()
+                    {
+                        
+                    }));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+            }
+            Console.WriteLine("Done");
+
         }
     }
 }
