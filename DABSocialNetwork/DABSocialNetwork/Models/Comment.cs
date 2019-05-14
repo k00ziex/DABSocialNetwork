@@ -12,7 +12,7 @@ namespace DABSocialNetwork.Models
         public string CommentContent { get; set; }
         
         //Bør bruges til at sætte navn på hvem der har kommenteret, men ikke ifølge opgavebeskrivelsen eller hvad?
-        public ObjectId UserId { get; set; }
+        public ObjectId User_Id { get; set; }
 
         public ObjectId PostId { get; set; }
     }
