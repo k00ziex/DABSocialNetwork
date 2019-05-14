@@ -25,14 +25,31 @@ namespace DABSocialNetwork
             db.DropCollection("Post");
             db.DropCollection("Comment");
 
-            var user1 = new User() { Age = 20, Email = "FakeMail1", Gender = "Attack Helicopter", Name = "Zacher"};
-            UserColl.InsertOne(user1);
+            var user1 = new User() { Age = 20, Email = "FakeMail1", Gender = "Attack Helicopter", Name = "Zacher", MyCircles = new List<Circle>()};
+       
             var user2 = new User() { Age = 21, Email = "FakeMail2", Gender = "Alpha Male", Name = "Tobi" };
             UserColl.InsertOne(user2);
             var user3 = new User() { Age = 22, Email = "FakeMail3", Gender = "Trebusjaeyye", Name = "Andy" };
             UserColl.InsertOne(user3);
             var user4 = new User() { Age = 23, Email = "FakeMail4", Gender = "Beta Male", Name = "Engholm" };
             UserColl.InsertOne(user4);
+
+            
+            var userlist = new List<User>();
+            
+            userlist.Add(user2);
+            userlist.Add(user3);
+            userlist.Add(user4);
+
+            var circle = new Circle()
+            {
+                NameOfCircle = "This is the name of my circle",
+                Users = userlist
+            };
+
+            user1.MyCircles.Add(circle);
+            UserColl.InsertOne(user1);
+
             Console.WriteLine("Done");
 
             //var userGotten = UserColl.Find(a => a.Name == "Zacher").ToList();
