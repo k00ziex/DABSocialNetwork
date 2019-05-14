@@ -13,5 +13,6 @@ namespace DABSocialNetwork.Models
 
         public User User { get; set; }
 
+        public Post Post { get; set; }
     }
 }
