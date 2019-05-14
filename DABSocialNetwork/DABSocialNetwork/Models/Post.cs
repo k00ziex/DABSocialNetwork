@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 
 namespace DABSocialNetwork.Models
@@ -16,7 +17,7 @@ namespace DABSocialNetwork.Models
 
         public DateTime TimeOfPosting { get; set; }
 
-        public Comment[] Comments { get; set; }
+        public List<Comment> Comments { get; set; }
 
         public User User { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace DABSocialNetwork.Models
 {
@@ -8,7 +9,7 @@ namespace DABSocialNetwork.Models
 
         public string NameOfList { get; set; }
 
-        public User[] MyBlockedUsers { get; set; }
+        public List<User> MyBlockedUsers { get; set; }
         public User MyUser { get; set; }
     }
 }

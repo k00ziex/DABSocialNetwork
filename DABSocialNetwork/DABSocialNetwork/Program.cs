@@ -21,8 +21,8 @@ namespace DABSocialNetwork
             var PostColl = db.GetCollection<Post>("Post");
             var CommentColl = db.GetCollection<Comment>("Comment");
 
-            var user = new User() { Age = 99, Email = "FakeMail2", Gender = "Attack Helicopter", Name = "Zacher"};
-            UserColl.InsertOne(user);
+            //var user = new User() { Age = 99, Email = "FakeMail2", Gender = "Attack Helicopter", Name = "Zacher"};
+            //UserColl.InsertOne(user);
             Console.WriteLine("Done");
 
             var userGotten = UserColl.Find(a => a.Name == "Zacher").ToList();
@@ -43,7 +43,6 @@ namespace DABSocialNetwork
             catch (Exception e)
             {
                 Console.WriteLine(e);
-
             }
             Console.WriteLine("Done");
 
