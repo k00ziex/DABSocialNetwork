@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABSocialNetwork.Models
@@ -9,6 +10,6 @@ namespace DABSocialNetwork.Models
 
         [BsonId]
         public ObjectId User_Id { get; set; }
-        public Post[] Posts { get; set; }
+        public List<Post> Posts { get; set; }
     }
 }

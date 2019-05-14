@@ -19,5 +19,7 @@ namespace DABSocialNetwork.Models
         public Comment[] Comments { get; set; }
 
         public User User { get; set; }
+
+        public Circle Circle { get; set; }
     }
 }
