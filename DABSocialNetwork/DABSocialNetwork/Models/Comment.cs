@@ -10,8 +10,10 @@ namespace DABSocialNetwork.Models
         public DateTime TimeOfCommenting { get; set; }
 
         public string CommentContent { get; set; }
+        
+        //Bør bruges til at sætte navn på hvem der har kommenteret, men ikke ifølge opgavebeskrivelsen eller hvad?
+        public ObjectId UserId { get; set; }
 
-        public ObjectId User_id { get; set; }
-
+        public ObjectId PostId { get; set; }
     }
 }

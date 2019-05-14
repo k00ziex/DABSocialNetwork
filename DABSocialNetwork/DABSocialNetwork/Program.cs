@@ -21,30 +21,40 @@ namespace DABSocialNetwork
             var PostColl = db.GetCollection<Post>("Post");
             var CommentColl = db.GetCollection<Comment>("Comment");
 
-            //var user = new User() { Age = 99, Email = "FakeMail2", Gender = "Attack Helicopter", Name = "Zacher"};
-            //UserColl.InsertOne(user);
+            db.DropCollection("User");
+            db.DropCollection("Post");
+            db.DropCollection("Comment");
+
+            var user1 = new User() { Age = 20, Email = "FakeMail1", Gender = "Attack Helicopter", Name = "Zacher"};
+            UserColl.InsertOne(user1);
+            var user2 = new User() { Age = 21, Email = "FakeMail2", Gender = "Alpha Male", Name = "Tobi" };
+            UserColl.InsertOne(user2);
+            var user3 = new User() { Age = 22, Email = "FakeMail3", Gender = "Trebusjaeyye", Name = "Andy" };
+            UserColl.InsertOne(user3);
+            var user4 = new User() { Age = 23, Email = "FakeMail4", Gender = "Beta Male", Name = "Engholm" };
+            UserColl.InsertOne(user4);
             Console.WriteLine("Done");
 
-            var userGotten = UserColl.Find(a => a.Name == "Zacher").ToList();
-            foreach (var USER in userGotten)
-            {
-                Console.WriteLine("{0}",USER.Gender);
-            }
+            //var userGotten = UserColl.Find(a => a.Name == "Zacher").ToList();
+            //foreach (var USER in userGotten)
+            //{
+            //    Console.WriteLine("{0}",USER.Gender);
+            //}
 
-            try
-            {
-                UserColl.FindOneAndUpdate(
-                    a => a.Name == "Zacher" && a.Email == "FakeMail2", 
-                    Builders<User>.Update.Set(e=> e.MyFeed, new Feed()
-                    {
+            //try
+            //{
+            //    UserColl.FindOneAndUpdate(
+            //        a => a.Name == "Zacher" && a.Email == "FakeMail2", 
+            //        Builders<User>.Update.Set(e=> e.MyFeed, new Feed()
+            //        {
                         
-                    }));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            Console.WriteLine("Done");
+            //        }));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+            //Console.WriteLine("Done");
 
         }
     }
