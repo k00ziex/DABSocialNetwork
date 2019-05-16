@@ -7,8 +7,6 @@ namespace DABSocialNetwork.Models
     public class Feed
     {
         public ObjectId Id { get; set; }
-
-        [BsonId]
         public ObjectId User_Id { get; set; }
         public List<Post> Posts { get; set; }
     }

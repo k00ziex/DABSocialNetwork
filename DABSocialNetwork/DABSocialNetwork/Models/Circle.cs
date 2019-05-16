@@ -6,8 +6,8 @@ namespace DABSocialNetwork.Models
     public class Circle
     {
         public ObjectId Id { get; set; }
-        public List<User> Users;
+        public ObjectId UserId { get; set; }
+        public List<ObjectId> Users;
         public string NameOfCircle { get; set; }
-        public User MyUser { get; set; }
     }
 }
