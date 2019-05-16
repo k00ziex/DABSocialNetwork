@@ -75,7 +75,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "This is a beautiful cock",
                 TimeOfPosting = new DateTime(2019, 05, 16),
-                CircleId = circle1User1.Id
+                CircleName = circle1User1.NameOfCircle
             };
             var postUser1_2 = new Post()
             {
@@ -114,7 +114,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "May the fourth be with you!",
                 TimeOfPosting = new DateTime(2019, 5, 4),
-                CircleId = circle1User3.Id
+                CircleName = circle1User3.NameOfCircle
             };
 
             var postUser4_1 = new Post()

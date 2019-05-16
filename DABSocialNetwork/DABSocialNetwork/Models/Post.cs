@@ -18,6 +18,6 @@ namespace DABSocialNetwork.Models
 
         public List<Comment> Comments { get; set; }
 
-        public ObjectId CircleId { get; set; }
+        public string CircleName { get; set; }
     }
 }

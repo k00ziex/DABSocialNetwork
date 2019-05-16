@@ -18,8 +18,6 @@ namespace DABSocialNetwork
         private IMongoCollection<Post> postCollection;
         private IMongoCollection<Wall> wallCollection;
         private IMongoCollection<User> userCollection;
-        private List<Post> feedPosts;
-        private List<Post> wallPosts = new List<Post>();
 
         public Queries(string nameOfDb)
         {
@@ -80,7 +78,7 @@ namespace DABSocialNetwork
 
             foreach (var post in visitingWall.UserPosts)
             {
-                if (post.Circle == null || PartOfCircle(visitingUser, post.Circle))
+                if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
                 {
                     Console.WriteLine("Image of the post: {0}", post.Image);
                     Console.WriteLine("Text of the post {0}", post.Text);
@@ -103,11 +101,11 @@ namespace DABSocialNetwork
         /// <returns>
         /// Returns true if the user is part of the circle, false if the user isn't.
         /// </returns>
-        public bool PartOfCircle(User User, Circle Circle)
+        public bool PartOfCircle(User User, string CircleName)
         {
             foreach (var userCircle in User.MyCircles)
             {
-                if (userCircle.NameOfCircle == Circle.NameOfCircle)
+                if (userCircle.NameOfCircle == CircleName)
                 {
                     return true;
                 }
