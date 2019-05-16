@@ -9,7 +9,7 @@ namespace DABSocialNetwork.Models
 
         public string NameOfList { get; set; }
 
-        public List<User> MyBlockedUsers { get; set; }
-        public User MyUser { get; set; }
+        public List<ObjectId> MyBlockedUsers { get; set; }
+      
     }
 }

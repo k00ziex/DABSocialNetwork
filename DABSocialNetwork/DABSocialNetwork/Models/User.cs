@@ -18,8 +18,6 @@ namespace DABSocialNetwork.Models
 
         public Wall MyWall{ get; set; }
 
-        public Feed MyFeed { get; set; }
-
-        public BlockedUsers MyBlockedUsers { get; set; }
+        public ObjectId MyBlockedUsersId { get; set; }
     }
 }
