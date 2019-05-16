@@ -15,7 +15,7 @@ namespace DABSocialNetwork
         private MongoClient client =  new MongoClient();
         private IMongoDatabase db;
         private IMongoCollection<Feed> feedCollection;
-        private IMongoCollection<Post> postCollection;
+        private IMongoCollection<Circle> circleCollection;
         private IMongoCollection<Wall> wallCollection;
         private IMongoCollection<User> userCollection;
 
@@ -23,7 +23,7 @@ namespace DABSocialNetwork
         {
             db = client.GetDatabase(nameOfDb);
             feedCollection = db.GetCollection<Feed>("Feed");
-            postCollection = db.GetCollection<Post>("Post");
+            circleCollection = db.GetCollection<Circle>("Circle");
             wallCollection = db.GetCollection<Wall>("Wall");
             userCollection = db.GetCollection<User>("User");
         }
@@ -103,7 +103,8 @@ namespace DABSocialNetwork
         /// </returns>
         public bool PartOfCircle(User User, string CircleName)
         {
-            foreach (var userCircle in User.MyCircles)
+            var listOfCircles = circleCollection.Find(a => a.NameOfCircle != null).ToList();
+            foreach (var userCircle in listOfCircles)
             {
                 if (userCircle.NameOfCircle == CircleName)
                 {
