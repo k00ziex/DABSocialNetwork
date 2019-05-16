@@ -18,6 +18,7 @@ namespace DABSocialNetwork
         private IMongoCollection<Circle> circleCollection;
         private IMongoCollection<Wall> wallCollection;
         private IMongoCollection<User> userCollection;
+        private IMongoCollection<BlockedUsers> blockedCollection;
 
         public Queries(string nameOfDb)
         {
@@ -26,6 +27,7 @@ namespace DABSocialNetwork
             circleCollection = db.GetCollection<Circle>("Circle");
             wallCollection = db.GetCollection<Wall>("Wall");
             userCollection = db.GetCollection<User>("User");
+            blockedCollection = db.GetCollection<BlockedUsers>("BlockedUsers");
         }
         
         public void Feed(string logged_in_users_name)
@@ -41,45 +43,59 @@ namespace DABSocialNetwork
 
 
                 // Writes the content of the posts to the console
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; (i < 7) && (i < myFeed.Posts.Count); i++)
                 {
-                    Console.WriteLine("___________________________________________________");
-                    Console.WriteLine("User for the post: {0}", myFeed.Posts[i].UserId.ToString());
-                    if (myFeed.Posts[i].Image != null)
+                    if (myFeed.Posts[i] != null)
                     {
-                        Console.WriteLine("Image for the post: {0}", myFeed.Posts[i].Image);
-                    }
-
-                    if (myFeed.Posts[i].Text != null)
-                    {
-                        Console.WriteLine("Text for the post: {0}", myFeed.Posts[i].Text);
-                    }
-
-                    Console.WriteLine("Time of post: {0}", myFeed.Posts[i].TimeOfPosting);
-
-                    Console.WriteLine("The post has {0} comments.", myFeed.Posts[i].Comments.Count);
-
-                    for (int j = 0; j < 2; j++)
-                    {
-                        if (myFeed.Posts != null)
+                        Console.WriteLine("___________________________________________________");
+                        Console.WriteLine("User for the post: {0}", myFeed.Posts[i].UserId.ToString());
+                        if (myFeed.Posts[i].Image != null)
                         {
-                            Console.WriteLine("\nFirst comment is: {0}", myFeed.Posts[i].Comments[j].CommentContent);
-                            //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
-                            Console.WriteLine("At time and date: {0}", myFeed.Posts[i].Comments[j].TimeOfCommenting);
+                            Console.WriteLine("Image for the post: {0}", myFeed.Posts[i].Image);
                         }
-                    }
 
-                    Console.WriteLine("___________________________________________________");
+                        if (myFeed.Posts[i].Text != null)
+                        {
+                            Console.WriteLine("Text for the post: {0}", myFeed.Posts[i].Text);
+                        }
+
+                        Console.WriteLine("Time of post: {0}", myFeed.Posts[i].TimeOfPosting);
+
+                        Console.WriteLine("The post has {0} comments.", myFeed.Posts[i].Comments.Count);
+
+                        if (myFeed.Posts[i].Comments.Count != 0)
+                        {
+                            for (int j = 0; j < 2; j++)
+                            {
+                                if (myFeed.Posts[i].Comments[j] != null)
+                                {
+                                    Console.WriteLine("\nFirst comment is: {0}",
+                                        myFeed.Posts[i].Comments[j].CommentContent);
+                                    //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
+                                    Console.WriteLine("At time and date: {0}",
+                                        myFeed.Posts[i].Comments[j].TimeOfCommenting);
+                                }
+                            }
+                        }
+
+                        Console.WriteLine("___________________________________________________");
+                    }
                 }
             }
         }
 
         public void Wall(string nameOfUserToVisit, string nameOfVisitingUser)
         {
+            var isHeBlocked = false;
             var visitingUser = userCollection.Find(a => a.Name == nameOfVisitingUser).ToList()[0];
             var userToVisit = userCollection.Find(a => a.Name == nameOfUserToVisit).ToList()[0];
-
-            if (visitingUser != null && userToVisit != null)
+            var blockedUsers = blockedCollection.Find(a => a.Id == userToVisit.MyBlockedUsersId).ToList()[0];
+            foreach (var VARIABLE in blockedUsers.MyBlockedUsers)
+            {
+                if (VARIABLE == visitingUser.Id)
+                    isHeBlocked = true;
+            }
+            if (visitingUser != null && userToVisit != null && !isHeBlocked)
             {
                 Console.WriteLine("Viewing the wall of: {0}", userToVisit.Name);
                 Console.WriteLine("___________________________________________________");
