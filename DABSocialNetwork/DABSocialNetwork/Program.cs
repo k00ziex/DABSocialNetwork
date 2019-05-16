@@ -23,10 +23,13 @@ namespace DABSocialNetwork
             var PostColl = db.GetCollection<Post>("Post");
             var CommentColl = db.GetCollection<Comment>("Comment");
             var FeedColl = db.GetCollection<Feed>("Feed");
+            var BlockedColl = db.GetCollection<BlockedUsers>("BlockedUsers");
 
             db.DropCollection("User");
             db.DropCollection("Post");
             db.DropCollection("Comment");
+            db.DropCollection("Feed");
+            db.DropCollection("BlockedUsers");
 
 
             /// TODO OPRETTELSE AF USERS
@@ -242,7 +245,7 @@ namespace DABSocialNetwork
 
 
 
-
+            BlockedColl.InsertOne(blockedListUser1);
 
             FeedColl.InsertOne(feedUser1);
             FeedColl.InsertOne(feedUser2);
