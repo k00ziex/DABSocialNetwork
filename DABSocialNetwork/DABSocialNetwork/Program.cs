@@ -14,6 +14,8 @@ namespace DABSocialNetwork
     {
         static void Main(string[] args)
         {
+            var query = new Queries("DABMandatory3");
+
             Console.WriteLine("Starting");
             var client = new MongoDB.Driver.MongoClient();
             var db = client.GetDatabase("DABMandatory3");
@@ -302,6 +304,51 @@ namespace DABSocialNetwork
             //}
             //Console.WriteLine("Done");
 
+
+            Console.WriteLine("Welcome to the MongoDB assignment from Group 6!");
+            Console.WriteLine("_____________________________________________________");
+            string keyRead;
+            do
+            {
+                Console.WriteLine("\n\n\nPlease select one of the following options:");
+                Console.WriteLine("Press 1 for creating a post.");
+                Console.WriteLine("Press 2 for creating a comment.");
+                Console.WriteLine("Press 3 for seeing a users feed.");
+                Console.WriteLine("Press 4 for seeing a users wall.");
+                Console.WriteLine("Press Q for quitting the application.");
+
+                keyRead = Console.ReadKey().KeyChar.ToString().ToLower();
+
+                switch (keyRead)
+                {
+                    case "1":
+                        Console.WriteLine("Test1");
+                        break;
+                    case "2":
+                        Console.WriteLine("Test2");
+                        break;
+                    case "3":
+                        Console.WriteLine("Please enter the name of the user who you want to see a feed for.");
+                        var usersName = Console.ReadLine();
+                        query.Feed(usersName);
+                        break;
+                    case "4":
+                        Console.WriteLine("Please enter the name of the user you want to visit");
+                        var userToVisit = Console.ReadLine();
+
+                        Console.WriteLine("Please enter the name of the visiting user");
+                        var userVisiting = Console.ReadLine();
+                        query.Wall(userToVisit, userVisiting);
+                        break;
+                    case "q":
+                        Console.WriteLine("Exiting the application");
+                        break;
+                    default:
+                        Console.WriteLine("*****Invalid entry! Try again!*****");
+                        break;
+                }
+
+            } while (keyRead != "q");
         }
     }
 }

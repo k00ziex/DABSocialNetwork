@@ -33,37 +33,41 @@ namespace DABSocialNetwork
             var user = userCollection.Find(u => u.Name == logged_in_users_name).ToList()[0];
 
             var myFeed = feedCollection.Find(a => a.User_Id == user.Id).ToList()[0];
-            Console.WriteLine();
-            Console.WriteLine("Seeing the feed for: {0} with the ID: {1}", user.Name, myFeed.User_Id);
-
-
-            // Writes the content of the posts to the console
-            for (int i = 0; i < 7; i++)
+            if (myFeed != null)
             {
-                Console.WriteLine("___________________________________________________");
-                Console.WriteLine("User for the post: {0}", myFeed.Posts[i].UserId.ToString());
-                if (myFeed.Posts[i].Image != null)
+
+                Console.WriteLine();
+                Console.WriteLine("Seeing the feed for: {0} with the ID: {1}", user.Name, myFeed.User_Id);
+
+
+                // Writes the content of the posts to the console
+                for (int i = 0; i < 7; i++)
                 {
-                    Console.WriteLine("Image for the post: {0}", myFeed.Posts[i].Image);
+                    Console.WriteLine("___________________________________________________");
+                    Console.WriteLine("User for the post: {0}", myFeed.Posts[i].UserId.ToString());
+                    if (myFeed.Posts[i].Image != null)
+                    {
+                        Console.WriteLine("Image for the post: {0}", myFeed.Posts[i].Image);
+                    }
+
+                    if (myFeed.Posts[i].Text != null)
+                    {
+                        Console.WriteLine("Text for the post: {0}", myFeed.Posts[i].Text);
+                    }
+
+                    Console.WriteLine("Time of post: {0}", myFeed.Posts[i].TimeOfPosting);
+
+                    Console.WriteLine("The post has {0} comments.", myFeed.Posts[i].Comments.Count);
+
+                    for (int j = 0; j < 2; j++)
+                    {
+                        Console.WriteLine("\nFirst comment is: {0}", myFeed.Posts[i].Comments[j].CommentContent);
+                        //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
+                        Console.WriteLine("At time and date: {0}", myFeed.Posts[i].Comments[j].TimeOfCommenting);
+                    }
+
+                    Console.WriteLine("___________________________________________________");
                 }
-
-                if (myFeed.Posts[i].Text != null)
-                {
-                    Console.WriteLine("Text for the post: {0}", myFeed.Posts[i].Text);
-                }
-
-                Console.WriteLine("Time of post: {0}", myFeed.Posts[i].TimeOfPosting);
-
-                Console.WriteLine("The post has {0} comments.", myFeed.Posts[i].Comments.Count);
-
-                for (int j = 0; j < 2; j++)
-                {
-                    Console.WriteLine("\nFirst comment is: {0}", myFeed.Posts[i].Comments[j].CommentContent);
-                    //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
-                    Console.WriteLine("At time and date: {0}", myFeed.Posts[i].Comments[j].TimeOfCommenting);
-                }
-
-                Console.WriteLine("___________________________________________________");
             }
         }
 
@@ -71,12 +75,11 @@ namespace DABSocialNetwork
         {
             var visitingUser = userCollection.Find(a => a.Name == nameOfVisitingUser).ToList()[0];
             var userToVisit = userCollection.Find(a => a.Name == nameOfUserToVisit).ToList()[0];
-            var visitingWall = wallCollection.Find(a => a.UserId == userToVisit.Id).ToList()[0];
 
             Console.WriteLine("Viewing the wall of: {0}", userToVisit.Name);
             Console.WriteLine("___________________________________________________");
 
-            foreach (var post in visitingWall.UserPosts)
+            foreach (var post in userToVisit.MyWall.UserPosts)
             {
                 if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
                 {
