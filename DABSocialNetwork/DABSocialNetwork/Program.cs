@@ -22,6 +22,7 @@ namespace DABSocialNetwork
             var UserColl = db.GetCollection<User>("User");
             var PostColl = db.GetCollection<Post>("Post");
             var CommentColl = db.GetCollection<Comment>("Comment");
+            var FeedColl = db.GetCollection<Feed>("Feed");
 
             db.DropCollection("User");
             db.DropCollection("Post");
@@ -52,6 +53,10 @@ namespace DABSocialNetwork
 
             circle1User3.Users.Add(user1.Id);
 
+            /// TODO OPRETTELSE AF BLOCKEDUSERS
+            var blockedListUser1 = new BlockedUsers() {NameOfList = "Zachers blocks", MyBlockedUsers = new List<ObjectId>(){user2.Id}};
+
+            user1.MyBlockedUsersId = blockedListUser1.Id;
 
             /// TODO OPRETTELSE AF WALLS
             var wallUser1 = new Wall(){UserId = user1.Id, UserPosts = new List<Post>() };
@@ -69,11 +74,6 @@ namespace DABSocialNetwork
             var feedUser2 = new Feed() { User_Id = user2.Id, Posts = new List<Post>() };
             var feedUser3 = new Feed() { User_Id = user3.Id, Posts = new List<Post>() };
             var feedUser4 = new Feed() { User_Id = user4.Id, Posts = new List<Post>() };
-
-            user1.MyFeed = feedUser1;
-            user2.MyFeed = feedUser2;
-            user3.MyFeed = feedUser3;
-            user4.MyFeed = feedUser4;
 
             /// TODO OPRETTELSE AF POSTS
             var postUser1_1 = new Post()
@@ -208,12 +208,12 @@ namespace DABSocialNetwork
             feedUser3.Posts.Add(postUser1_2);
             feedUser4.Posts.Add(postUser1_2);
 
-            feedUser1.Posts.Add(postUser2_1);
+            
             feedUser2.Posts.Add(postUser2_1);
             feedUser3.Posts.Add(postUser2_1);
             feedUser4.Posts.Add(postUser2_1);
 
-            feedUser1.Posts.Add(postUser2_2);
+            
             feedUser2.Posts.Add(postUser2_2);
             feedUser3.Posts.Add(postUser2_2);
             feedUser4.Posts.Add(postUser2_2);
@@ -244,8 +244,10 @@ namespace DABSocialNetwork
 
 
 
-
-
+            FeedColl.InsertOne(feedUser1);
+            FeedColl.InsertOne(feedUser2);
+            FeedColl.InsertOne(feedUser3);
+            FeedColl.InsertOne(feedUser4);
 
             PostColl.InsertOne(postUser1_1);
             PostColl.InsertOne(postUser1_2);
@@ -263,13 +265,12 @@ namespace DABSocialNetwork
 
 
             UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyWall, wallUser1));
-            UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyFeed, feedUser1));
+            
             UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyWall, wallUser2));
-            UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyFeed, feedUser2));
+
             UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyWall, wallUser3));
-            UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyFeed, feedUser3));
+
             UserColl.FindOneAndUpdate(a => a.Name == "Engholm", Builders<User>.Update.Set(z => z.MyWall, wallUser4));
-            UserColl.FindOneAndUpdate(a => a.Name == "Engholm", Builders<User>.Update.Set(z => z.MyFeed, feedUser4));
 
 
 
