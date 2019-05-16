@@ -32,6 +32,20 @@ namespace DABSocialNetwork
             var user3 = new User() { Age = 22, Email = "FakeMail3", Gender = "Trebusjaeyye", Name = "Andy" };
             var user4 = new User() { Age = 23, Email = "FakeMail4", Gender = "Beta Male", Name = "Engholm" };
 
+            /// TODO OPRETTELSE AF CIRCLES
+            var circle1User1 = new Circle(){NameOfCircle = "My Bestest Friends", UserId = user1.Id};
+            var circle2User1 = new Circle(){NameOfCircle = "Everyone I Love", UserId = user1.Id};
+            var circle1User3 = new Circle(){NameOfCircle = "Watch This Shit", UserId = user3.Id};
+            
+            circle1User1.Users.Add(user2.Id);
+            circle1User1.Users.Add(user3.Id);
+            circle1User1.Users.Add(user4.Id);
+
+            circle2User1.Users.Add(user2.Id);
+
+            circle1User3.Users.Add(user1.Id);
+
+
             /// TODO OPRETTELSE AF WALLS
             var wallUser1 = new Wall(){UserId = user1.Id };
             var wallUser2 = new Wall() { UserId = user2.Id };
@@ -61,6 +75,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "This is a beautiful cock",
                 TimeOfPosting = new DateTime(2019, 05, 16),
+                CircleId = circle1User1.Id
             };
             var postUser1_2 = new Post()
             {
@@ -68,6 +83,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "This is a weird milk machine",
                 TimeOfPosting = new DateTime(2019, 05, 04),
+                
             };
 
             var postUser2_1 = new Post()
@@ -98,6 +114,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "May the fourth be with you!",
                 TimeOfPosting = new DateTime(2019, 5, 4),
+                CircleId = circle1User3.Id
             };
 
             var postUser4_1 = new Post()
@@ -105,16 +122,60 @@ namespace DABSocialNetwork
                 Image = "Picture of a furry",
                 UserId = user1.Id,
                 Text = "Wouldn't I look cute like this? #Cuteness #Furry4Life #HarderDaddy",
-                TimeOfPosting = new DateTime(2019, 05, 12),
+                TimeOfPosting = new DateTime(2019, 05, 12)
             };
 
             var postUser4_2 = new Post()
             {
-                Image = "Picture of starving children",
+                Image = "Picture of himself in a furry costume",
                 UserId = user1.Id,
-                Text = "I'm not racist, I'm just afraid of the dark.",
+                Text = "Felt cute. Might delete later <3",
                 TimeOfPosting = new DateTime(2019, 05, 18),
             };
+
+            /// TODO OPRETTELSE AF COMMENTS
+            var commentUser2 = new Comment()
+            {
+                CommentContent = "The fuck is this?!?!",
+                PostId = postUser4_2.Id,
+                TimeOfCommenting = new DateTime(2019, 05, 18, 12, 32,11),
+                User_Id = user2.Id
+            };
+            var commentUser3 = new Comment()
+            {
+                CommentContent = "Go get some help ffs",
+                PostId = postUser4_2.Id,
+                TimeOfCommenting = new DateTime(2019, 05, 18, 12, 45, 32),
+                User_Id = user3.Id
+            };
+
+            var commentUser1 = new Comment()
+            {
+                CommentContent = "You go girl!",
+                PostId = postUser2_2.Id,
+                TimeOfCommenting = new DateTime(2019, 5,17, 15, 31, 9),
+                User_Id = user1.Id
+            };
+
+            var commentUser4 = new Comment()
+            {
+                CommentContent = "Work it baby! <3",
+                PostId = postUser2_2.Id,
+                TimeOfCommenting = new DateTime(2019, 5, 27, 8, 13, 7),
+                User_Id = user4.Id
+            };
+
+
+
+
+
+
+
+
+
+
+
+
 
             Console.WriteLine("Done");
 
