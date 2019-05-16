@@ -24,11 +24,11 @@ namespace DABSocialNetwork
             commentCollection = db.GetCollection<Comment>("Comment");
         }
 
-        public void CreatePost(ObjectId owner_id, string image, string text, Circle circle)
+        public void CreatePost(ObjectId owner_id, string image, string text, ObjectId circleId)
         {
             try
             {
-                var post = new Post(){Comments = new List<Comment>(), Circle = circle, Image = image, Text = text, UserId = owner_id, TimeOfPosting = DateTime.Now};
+                var post = new Post(){Comments = new List<Comment>(), CircleId = circleId, Image = image, Text = text, UserId = owner_id, TimeOfPosting = DateTime.Now};
                 
                 postCollection.InsertOne(post);
             }
