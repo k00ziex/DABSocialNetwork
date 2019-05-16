@@ -27,15 +27,20 @@ namespace DABSocialNetwork
 
 
             /// TODO OPRETTELSE AF USERS
-            var user1 = new User() { Age = 20, Email = "FakeMail1", Gender = "Attack Helicopter", Name = "Zacher", MyCircles = new List<Circle>()};
+            var user1 = new User() { Age = 20, Email = "FakeMail1", Gender = "Attack Helicopter", Name = "Zacher" };
             var user2 = new User() { Age = 21, Email = "FakeMail2", Gender = "Alpha Male", Name = "Tobi" };
             var user3 = new User() { Age = 22, Email = "FakeMail3", Gender = "Trebusjaeyye", Name = "Andy" };
             var user4 = new User() { Age = 23, Email = "FakeMail4", Gender = "Beta Male", Name = "Engholm" };
 
+            UserColl.InsertOne(user1);
+            UserColl.InsertOne(user2);
+            UserColl.InsertOne(user3);
+            UserColl.InsertOne(user4);
+
             /// TODO OPRETTELSE AF CIRCLES
-            var circle1User1 = new Circle(){NameOfCircle = "My Bestest Friends", UserId = user1.Id};
-            var circle2User1 = new Circle(){NameOfCircle = "Everyone I Love", UserId = user1.Id};
-            var circle1User3 = new Circle(){NameOfCircle = "Watch This Shit", UserId = user3.Id};
+            var circle1User1 = new Circle(){NameOfCircle = "My Bestest Friends", Users = new List<ObjectId>()};
+            var circle2User1 = new Circle(){NameOfCircle = "Everyone I Love", Users = new List<ObjectId>() };
+            var circle1User3 = new Circle(){NameOfCircle = "Watch This Shit", Users = new List<ObjectId>() };
             
             circle1User1.Users.Add(user2.Id);
             circle1User1.Users.Add(user3.Id);
@@ -47,10 +52,10 @@ namespace DABSocialNetwork
 
 
             /// TODO OPRETTELSE AF WALLS
-            var wallUser1 = new Wall(){UserId = user1.Id };
-            var wallUser2 = new Wall() { UserId = user2.Id };
-            var wallUser3 = new Wall() { UserId = user3.Id };
-            var wallUser4 = new Wall() { UserId = user4.Id };
+            var wallUser1 = new Wall(){UserId = user1.Id, UserPosts = new List<Post>() };
+            var wallUser2 = new Wall() { UserId = user2.Id, UserPosts = new List<Post>() };
+            var wallUser3 = new Wall() { UserId = user3.Id, UserPosts = new List<Post>() };
+            var wallUser4 = new Wall() { UserId = user4.Id, UserPosts = new List<Post>() };
 
             user1.MyWall = wallUser1;
             user2.MyWall = wallUser2;
@@ -58,10 +63,10 @@ namespace DABSocialNetwork
             user4.MyWall = wallUser4;
 
             /// TODO OPRETTELSE AF FEEDS
-            var feedUser1 = new Feed() { User_Id = user1.Id };
-            var feedUser2 = new Feed() { User_Id = user2.Id };
-            var feedUser3 = new Feed() { User_Id = user3.Id };
-            var feedUser4 = new Feed() { User_Id = user4.Id };
+            var feedUser1 = new Feed() { User_Id = user1.Id, Posts = new List<Post>() };
+            var feedUser2 = new Feed() { User_Id = user2.Id, Posts = new List<Post>() };
+            var feedUser3 = new Feed() { User_Id = user3.Id, Posts = new List<Post>() };
+            var feedUser4 = new Feed() { User_Id = user4.Id, Posts = new List<Post>() };
 
             user1.MyFeed = feedUser1;
             user2.MyFeed = feedUser2;
@@ -75,7 +80,8 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "This is a beautiful cock",
                 TimeOfPosting = new DateTime(2019, 05, 16),
-                CircleName = circle1User1.NameOfCircle
+                CircleName = circle1User1.NameOfCircle,
+                Comments = new List<Comment>()
             };
             var postUser1_2 = new Post()
             {
@@ -83,7 +89,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "This is a weird milk machine",
                 TimeOfPosting = new DateTime(2019, 05, 04),
-                
+                Comments = new List<Comment>()
             };
 
             var postUser2_1 = new Post()
@@ -92,6 +98,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "You can do it!",
                 TimeOfPosting = new DateTime(2019, 05, 13),
+                Comments = new List<Comment>()
             };
             var postUser2_2 = new Post()
             {
@@ -99,6 +106,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "Getting fit today #Workout #Gym #FitLife",
                 TimeOfPosting = new DateTime(2019, 05, 16),
+                Comments = new List<Comment>()
             };
 
             var postUser3_1 = new Post()
@@ -107,14 +115,17 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "Finally did it! #Climbing #FuckYeah",
                 TimeOfPosting = new DateTime(2019, 2, 3),
+                Comments = new List<Comment>()
             };
+
             var postUser3_2 = new Post()
             {
                 Image = "Picture of Darth Vader",
                 UserId = user1.Id,
                 Text = "May the fourth be with you!",
                 TimeOfPosting = new DateTime(2019, 5, 4),
-                CircleName = circle1User3.NameOfCircle
+                CircleName = circle1User3.NameOfCircle,
+                Comments = new List<Comment>()
             };
 
             var postUser4_1 = new Post()
@@ -122,7 +133,8 @@ namespace DABSocialNetwork
                 Image = "Picture of a furry",
                 UserId = user1.Id,
                 Text = "Wouldn't I look cute like this? #Cuteness #Furry4Life #HarderDaddy",
-                TimeOfPosting = new DateTime(2019, 05, 12)
+                TimeOfPosting = new DateTime(2019, 05, 12),
+                Comments = new List<Comment>()
             };
 
             var postUser4_2 = new Post()
@@ -131,6 +143,7 @@ namespace DABSocialNetwork
                 UserId = user1.Id,
                 Text = "Felt cute. Might delete later <3",
                 TimeOfPosting = new DateTime(2019, 05, 18),
+                Comments = new List<Comment>()
             };
 
             /// TODO OPRETTELSE AF COMMENTS
@@ -167,6 +180,94 @@ namespace DABSocialNetwork
 
 
 
+            postUser4_2.Comments.Add(commentUser2);
+            postUser4_2.Comments.Add(commentUser3);
+            postUser2_2.Comments.Add(commentUser1);
+            postUser2_2.Comments.Add(commentUser4);
+
+            wallUser1.UserPosts.Add(postUser1_1);
+            wallUser1.UserPosts.Add(postUser1_2);
+            wallUser2.UserPosts.Add(postUser2_1);
+            wallUser2.UserPosts.Add(postUser2_2);
+            wallUser3.UserPosts.Add(postUser3_1);
+            wallUser3.UserPosts.Add(postUser3_2);
+            wallUser4.UserPosts.Add(postUser4_1);
+            wallUser4.UserPosts.Add(postUser4_2);
+
+
+            //Feeds
+            feedUser1.Posts.Add(postUser1_1);
+            feedUser2.Posts.Add(postUser1_1);
+            feedUser3.Posts.Add(postUser1_1);
+            feedUser4.Posts.Add(postUser1_1);
+
+            feedUser1.Posts.Add(postUser1_2);
+            feedUser2.Posts.Add(postUser1_2);
+            feedUser3.Posts.Add(postUser1_2);
+            feedUser4.Posts.Add(postUser1_2);
+
+            feedUser1.Posts.Add(postUser2_1);
+            feedUser2.Posts.Add(postUser2_1);
+            feedUser3.Posts.Add(postUser2_1);
+            feedUser4.Posts.Add(postUser2_1);
+
+            feedUser1.Posts.Add(postUser2_2);
+            feedUser2.Posts.Add(postUser2_2);
+            feedUser3.Posts.Add(postUser2_2);
+            feedUser4.Posts.Add(postUser2_2);
+
+            feedUser1.Posts.Add(postUser3_1);
+            feedUser2.Posts.Add(postUser3_1);
+            feedUser3.Posts.Add(postUser3_1);
+            feedUser4.Posts.Add(postUser3_1);
+
+            feedUser1.Posts.Add(postUser3_2);
+            feedUser3.Posts.Add(postUser3_2);
+
+            feedUser1.Posts.Add(postUser4_1);
+            feedUser2.Posts.Add(postUser4_1);
+            feedUser3.Posts.Add(postUser4_1);
+            feedUser4.Posts.Add(postUser4_1);
+
+            feedUser1.Posts.Add(postUser4_2);
+            feedUser2.Posts.Add(postUser4_2);
+            feedUser3.Posts.Add(postUser4_2);
+            feedUser4.Posts.Add(postUser4_2);
+
+
+
+
+
+
+
+
+
+
+
+
+            PostColl.InsertOne(postUser1_1);
+            PostColl.InsertOne(postUser1_2);
+            PostColl.InsertOne(postUser2_1);
+            PostColl.InsertOne(postUser2_2);
+            PostColl.InsertOne(postUser3_1);
+            PostColl.InsertOne(postUser3_2);
+            PostColl.InsertOne(postUser4_1);
+            PostColl.InsertOne(postUser4_2);
+
+            CommentColl.InsertOne(commentUser1);
+            CommentColl.InsertOne(commentUser2);
+            CommentColl.InsertOne(commentUser3);
+            CommentColl.InsertOne(commentUser4);
+
+
+            UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyWall, wallUser1));
+            UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyFeed, feedUser1));
+            UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyWall, wallUser2));
+            UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyFeed, feedUser2));
+            UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyWall, wallUser3));
+            UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyFeed, feedUser3));
+            UserColl.FindOneAndUpdate(a => a.Name == "Engholm", Builders<User>.Update.Set(z => z.MyWall, wallUser4));
+            UserColl.FindOneAndUpdate(a => a.Name == "Engholm", Builders<User>.Update.Set(z => z.MyFeed, feedUser4));
 
 
 

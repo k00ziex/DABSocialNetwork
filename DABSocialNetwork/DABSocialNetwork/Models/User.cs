@@ -16,8 +16,6 @@ namespace DABSocialNetwork.Models
 
         public string Email { get; set; }
 
-        public List<Circle> MyCircles { get; set; }
-
         public Wall MyWall{ get; set; }
 
         public Feed MyFeed { get; set; }
