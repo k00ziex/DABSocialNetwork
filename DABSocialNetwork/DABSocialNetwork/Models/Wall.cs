@@ -9,7 +9,5 @@ namespace DABSocialNetwork.Models
         public ObjectId Id { get; set; }
         public ObjectId UserId { get; set; }
         public List<Post> UserPosts { get; set; }
-
-        public User User { get; set; }
     }
 }
