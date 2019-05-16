@@ -15,6 +15,7 @@ namespace DABSocialNetwork
         private IMongoDatabase db;
         private IMongoCollection<Post> postCollection;
         private IMongoCollection<Comment> commentCollection;
+        private IMongoCollection<User> userCollection;
 
 
         public Creation(string nameOfDb)
@@ -22,6 +23,7 @@ namespace DABSocialNetwork
             db = client.GetDatabase(nameOfDb);
             postCollection = db.GetCollection<Post>("Post");
             commentCollection = db.GetCollection<Comment>("Comment");
+            userCollection = db.GetCollection<User>("User");
         }
 
         public void CreatePost(ObjectId owner_id, string image, string text, string circleName)
@@ -29,8 +31,9 @@ namespace DABSocialNetwork
             try
             {
                 var post = new Post(){Comments = new List<Comment>(), CircleName = circleName, Image = image, Text = text, UserId = owner_id, TimeOfPosting = DateTime.Now};
-                
-                postCollection.InsertOne(post);
+                var user = userCollection.Find(u => u.Id == owner_id);
+                if(user != null)
+                    postCollection.InsertOne(post);
             }
             catch (Exception e)
             {

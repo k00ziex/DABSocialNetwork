@@ -30,9 +30,9 @@ namespace DABSocialNetwork
             blockedCollection = db.GetCollection<BlockedUsers>("BlockedUsers");
         }
         
-        public void Feed(string logged_in_users_name)
+        public void Feed(ObjectId logged_in_users_name)
         {
-            var user = userCollection.Find(u => u.Name == logged_in_users_name).ToList()[0];
+            var user = userCollection.Find(u => u.Id == logged_in_users_name).ToList()[0];
 
             var myFeed = feedCollection.Find(a => a.User_Id == user.Id).ToList()[0];
             if (myFeed != null)
@@ -84,17 +84,27 @@ namespace DABSocialNetwork
             }
         }
 
-        public void Wall(string nameOfUserToVisit, string nameOfVisitingUser)
+        public void Wall(ObjectId nameOfUserToVisit, ObjectId nameOfVisitingUser)
         {
             var isHeBlocked = false;
-            var visitingUser = userCollection.Find(a => a.Name == nameOfVisitingUser).ToList()[0];
-            var userToVisit = userCollection.Find(a => a.Name == nameOfUserToVisit).ToList()[0];
-            var blockedUsers = blockedCollection.Find(a => a.Id == userToVisit.MyBlockedUsersId).ToList()[0];
-            foreach (var VARIABLE in blockedUsers.MyBlockedUsers)
+            var visitingUser = userCollection.Find(a => a.Id == nameOfVisitingUser).ToList()[0];
+            var userToVisit = userCollection.Find(a => a.Id == nameOfUserToVisit).ToList()[0];
+
+            try
             {
-                if (VARIABLE == visitingUser.Id)
-                    isHeBlocked = true;
+                var blockedUsers = blockedCollection.Find(a => a.Id == userToVisit.MyBlockedUsersId).ToList()[0];
+
+                foreach (var VARIABLE in blockedUsers.MyBlockedUsers)
+                {
+                    if (VARIABLE == visitingUser.Id)
+                        isHeBlocked = true;
+                }
             }
+            catch (Exception e)
+            {
+                isHeBlocked = false;
+            }
+            
             if (visitingUser != null && userToVisit != null && !isHeBlocked)
             {
                 Console.WriteLine("Viewing the wall of: {0}", userToVisit.Name);
@@ -105,7 +115,7 @@ namespace DABSocialNetwork
                     if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
                     {
                         Console.WriteLine("Image of the post: {0}", post.Image);
-                        Console.WriteLine("Text of the post {0}", post.Text);
+                        Console.WriteLine("Text of the post: {0}", post.Text);
                         Console.WriteLine("Time of the post: {0}", post.TimeOfPosting);
                         Console.WriteLine("___________________________________________________");
                     }

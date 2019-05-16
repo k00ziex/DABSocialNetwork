@@ -15,6 +15,7 @@ namespace DABSocialNetwork
         static void Main(string[] args)
         {
             var query = new Queries("DABMandatory3");
+            var create = new Creation("DABMandatory3");
 
             Console.WriteLine("Starting");
             var client = new MongoDB.Driver.MongoClient();
@@ -24,7 +25,7 @@ namespace DABSocialNetwork
             var CommentColl = db.GetCollection<Comment>("Comment");
             var FeedColl = db.GetCollection<Feed>("Feed");
             var BlockedColl = db.GetCollection<BlockedUsers>("BlockedUsers");
-
+            
             db.DropCollection("User");
             db.DropCollection("Post");
             db.DropCollection("Comment");
@@ -325,22 +326,39 @@ namespace DABSocialNetwork
                 switch (keyRead)
                 {
                     case "1":
-                        Console.WriteLine("Test1");
+                        Console.WriteLine("Please enter the ID of the owner of the post you're now creating (Check the MongoDB if you don't know it).");
+                        var idOfPost = Console.ReadLine();
+                        var postID = new ObjectId(idOfPost);
+                        Console.WriteLine("Please enter the image you want to include.");
+                        var imageOfPost = Console.ReadLine();
+                        Console.WriteLine("Please enter the text of the post.");
+                        var textOfPost = Console.ReadLine();
+                        Console.WriteLine("Please enter the name of the circle you want to post it in (As long as you're part of it).");
+                        var circleNameOfPost = Console.ReadLine();
+                        create.CreatePost(postID, imageOfPost, textOfPost,circleNameOfPost);
                         break;
                     case "2":
-                        Console.WriteLine("Test2");
+                        Console.WriteLine("Please enter the ID of the post you'd like to comment on.");
+                        var idOfPostToComment = Console.ReadLine();
+                        var postIdToComment = new ObjectId(idOfPostToComment);
+                        Console.WriteLine("Please enter the content for the comment.");
+                        var content = Console.ReadLine();
+                        create.CreateComment(postIdToComment, content);
                         break;
                     case "3":
-                        Console.WriteLine("Please enter the name of the user who you want to see a feed for.");
-                        var usersName = Console.ReadLine();
-                        query.Feed(usersName);
+                        Console.WriteLine("Please enter the ID of the user who you want to see a feed for.");
+                        var usersNameID = Console.ReadLine();
+                        var userToSeeFeedFor = new ObjectId(usersNameID);
+                        query.Feed(userToSeeFeedFor);
                         break;
                     case "4":
-                        Console.WriteLine("Please enter the name of the user you want to visit");
-                        var userToVisit = Console.ReadLine();
+                        Console.WriteLine("Please enter the ID of the user you want to visit");
+                        var userToVisitID = Console.ReadLine();
+                        var userToVisit = new ObjectId(userToVisitID);
 
-                        Console.WriteLine("Please enter the name of the visiting user");
-                        var userVisiting = Console.ReadLine();
+                        Console.WriteLine("Please enter the ID of the visiting user");
+                        var userVisitingID = Console.ReadLine();
+                        var userVisiting = new ObjectId(userVisitingID);
                         query.Wall(userToVisit, userVisiting);
                         break;
                     case "q":
