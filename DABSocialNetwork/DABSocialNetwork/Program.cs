@@ -268,7 +268,7 @@ namespace DABSocialNetwork
 
 
             UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyWall, wallUser1));
-            
+            UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyBlockedUsersId, blockedListUser1.Id));
             UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyWall, wallUser2));
 
             UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyWall, wallUser3));
