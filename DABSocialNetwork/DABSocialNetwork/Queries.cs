@@ -61,9 +61,12 @@ namespace DABSocialNetwork
 
                     for (int j = 0; j < 2; j++)
                     {
-                        Console.WriteLine("\nFirst comment is: {0}", myFeed.Posts[i].Comments[j].CommentContent);
-                        //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
-                        Console.WriteLine("At time and date: {0}", myFeed.Posts[i].Comments[j].TimeOfCommenting);
+                        if (myFeed.Posts != null)
+                        {
+                            Console.WriteLine("\nFirst comment is: {0}", myFeed.Posts[i].Comments[j].CommentContent);
+                            //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
+                            Console.WriteLine("At time and date: {0}", myFeed.Posts[i].Comments[j].TimeOfCommenting);
+                        }
                     }
 
                     Console.WriteLine("___________________________________________________");
@@ -76,17 +79,20 @@ namespace DABSocialNetwork
             var visitingUser = userCollection.Find(a => a.Name == nameOfVisitingUser).ToList()[0];
             var userToVisit = userCollection.Find(a => a.Name == nameOfUserToVisit).ToList()[0];
 
-            Console.WriteLine("Viewing the wall of: {0}", userToVisit.Name);
-            Console.WriteLine("___________________________________________________");
-
-            foreach (var post in userToVisit.MyWall.UserPosts)
+            if (visitingUser != null && userToVisit != null)
             {
-                if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
+                Console.WriteLine("Viewing the wall of: {0}", userToVisit.Name);
+                Console.WriteLine("___________________________________________________");
+
+                foreach (var post in userToVisit.MyWall.UserPosts)
                 {
-                    Console.WriteLine("Image of the post: {0}", post.Image);
-                    Console.WriteLine("Text of the post {0}", post.Text);
-                    Console.WriteLine("Time of the post: {0}", post.TimeOfPosting);
-                    Console.WriteLine("___________________________________________________");
+                    if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
+                    {
+                        Console.WriteLine("Image of the post: {0}", post.Image);
+                        Console.WriteLine("Text of the post {0}", post.Text);
+                        Console.WriteLine("Time of the post: {0}", post.TimeOfPosting);
+                        Console.WriteLine("___________________________________________________");
+                    }
                 }
             }
         }
