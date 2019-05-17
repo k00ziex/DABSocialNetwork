@@ -30,9 +30,9 @@ namespace DABSocialNetwork
             blockedCollection = db.GetCollection<BlockedUsers>("BlockedUsers");
         }
         
-        public void Feed(ObjectId logged_in_users_name)
+        public void Feed(ObjectId logged_in_users_id)
         {
-            var user = userCollection.Find(u => u.Id == logged_in_users_name).ToList()[0];
+            var user = userCollection.Find(u => u.Id == logged_in_users_id).ToList()[0];
 
             var myFeed = feedCollection.Find(a => a.User_Id == user.Id).ToList()[0];
             if (myFeed != null)
@@ -69,7 +69,7 @@ namespace DABSocialNetwork
                             {
                                 if (myFeed.Posts[i].Comments[j] != null)
                                 {
-                                    Console.WriteLine("\nFirst comment is: {0}",
+                                    Console.WriteLine("\nThe content of the comment is: {0}",
                                         myFeed.Posts[i].Comments[j].CommentContent);
                                     //Console.WriteLine("By: {0}", myFeed.Posts[i].Comments[j].User_id);
                                     Console.WriteLine("At time and date: {0}",
@@ -112,7 +112,7 @@ namespace DABSocialNetwork
 
                 foreach (var post in userToVisit.MyWall.UserPosts)
                 {
-                    if (post.CircleName == null || PartOfCircle(visitingUser, post.CircleName))
+                    if (string.IsNullOrEmpty(post.CircleName) || PartOfCircle(visitingUser, post.CircleName))
                     {
                         Console.WriteLine("Image of the post: {0}", post.Image);
                         Console.WriteLine("Text of the post: {0}", post.Text);

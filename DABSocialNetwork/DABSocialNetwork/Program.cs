@@ -101,12 +101,14 @@ namespace DABSocialNetwork
             var CommentColl = db.GetCollection<Comment>("Comment");
             var FeedColl = db.GetCollection<Feed>("Feed");
             var BlockedColl = db.GetCollection<BlockedUsers>("BlockedUsers");
+            var circleColl = db.GetCollection<Circle>("Circle");
 
             db.DropCollection("User");
             db.DropCollection("Post");
             db.DropCollection("Comment");
             db.DropCollection("Feed");
             db.DropCollection("BlockedUsers");
+            db.DropCollection("Circle");
 
 
             /// TODO OPRETTELSE AF USERS
@@ -116,7 +118,8 @@ namespace DABSocialNetwork
                 Email = "FakeMail1",
                 Gender = "Attack Helicopter",
                 Name = "Zacher",
-                Id = ObjectId.GenerateNewId()
+                Id = ObjectId.GenerateNewId(),
+                MyCircles = new List<ObjectId>()
             };
             var user2 = new User()
             {
@@ -124,7 +127,8 @@ namespace DABSocialNetwork
                 Email = "FakeMail2",
                 Gender = "Alpha Male",
                 Name = "Tobi",
-                Id = ObjectId.GenerateNewId()
+                Id = ObjectId.GenerateNewId(),
+                MyCircles = new List<ObjectId>()
             };
             var user3 = new User()
             {
@@ -132,7 +136,8 @@ namespace DABSocialNetwork
                 Email = "FakeMail3",
                 Gender = "Trebusjaeyye",
                 Name = "Andy",
-                Id = ObjectId.GenerateNewId()
+                Id = ObjectId.GenerateNewId(),
+                MyCircles = new List<ObjectId>()
             };
             var user4 = new User()
             {
@@ -140,7 +145,8 @@ namespace DABSocialNetwork
                 Email = "FakeMail4",
                 Gender = "Beta Male",
                 Name = "Engholm",
-                Id = ObjectId.GenerateNewId()
+                Id = ObjectId.GenerateNewId(),
+                MyCircles = new List<ObjectId>()
             };
 
             UserColl.InsertOne(user1);
@@ -160,6 +166,9 @@ namespace DABSocialNetwork
             circle2User1.Users.Add(user2.Id);
 
             circle1User3.Users.Add(user1.Id);
+
+
+
 
             /// TODO OPRETTELSE AF BLOCKEDUSERS
             var blockedListUser1 = new BlockedUsers() { NameOfList = "Zachers blocks", MyBlockedUsers = new List<ObjectId>() { user2.Id } };
@@ -394,16 +403,36 @@ namespace DABSocialNetwork
             CommentColl.InsertOne(commentUser3);
             CommentColl.InsertOne(commentUser4);
 
+            circleColl.InsertOne(circle1User1);
+            circleColl.InsertOne(circle1User3);
+            circleColl.InsertOne(circle2User1);
+
 
             UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyWall, wallUser1));
             UserColl.FindOneAndUpdate(a => a.Name == "Zacher", Builders<User>.Update.Set(z => z.MyBlockedUsersId, blockedListUser1.Id));
             UserColl.FindOneAndUpdate(a => a.Name == "Tobi", Builders<User>.Update.Set(z => z.MyWall, wallUser2));
-
             UserColl.FindOneAndUpdate(a => a.Name == "Andy", Builders<User>.Update.Set(z => z.MyWall, wallUser3));
-
             UserColl.FindOneAndUpdate(a => a.Name == "Engholm", Builders<User>.Update.Set(z => z.MyWall, wallUser4));
 
+            var zacher = UserColl.Find(x => x.Name == "Zacher").ToList()[0];
+            zacher.MyCircles.Add(circle1User3.Id);
+            zacher.MyCircles.Add(circle1User1.Id);
+            zacher.MyCircles.Add(circle2User1.Id);
+            UserColl.FindOneAndReplace(x => x.Id == zacher.Id, zacher);
 
+            var Tobi = UserColl.Find(x => x.Name == "Tobi").ToList()[0];
+            Tobi.MyCircles.Add(circle1User1.Id);
+            Tobi.MyCircles.Add(circle2User1.Id);
+            UserColl.FindOneAndReplace(x => x.Id == Tobi.Id, Tobi);
+
+            var Andy = UserColl.Find(x => x.Name == "Andy").ToList()[0];
+            Andy.MyCircles.Add(circle1User1.Id);
+            Andy.MyCircles.Add(circle1User3.Id);
+            UserColl.FindOneAndReplace(x => x.Id == Andy.Id, Andy);
+
+            var Engholm = UserColl.Find(x => x.Name == "Engholm").ToList()[0];
+            Engholm.MyCircles.Add(circle1User1.Id);
+            UserColl.FindOneAndReplace(x => x.Id == Engholm.Id, Engholm);
         }
     }
 }
