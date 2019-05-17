@@ -24,6 +24,7 @@ namespace DABSocialNetwork
 
             Dataseeding(dbname);
 
+
             string keyRead;
             do
             {
@@ -33,6 +34,7 @@ namespace DABSocialNetwork
                 Console.WriteLine("Press 3 for seeing a users feed.");
                 Console.WriteLine("Press 4 for seeing a users wall.");
                 Console.WriteLine("Press Q for quitting the application.");
+                Console.WriteLine("Find the required ID's using the program MongoDB Compass or something like the mongo shell.");
 
                 keyRead = Console.ReadKey().KeyChar.ToString().ToLower();
 
